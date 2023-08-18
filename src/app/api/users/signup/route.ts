@@ -48,6 +48,8 @@ export async function POST(request: NextRequest) {
             success: true,
             savedUser
         });
+
+        console.log(savedUser);
     } catch (error: any) {
         return NextResponse.json(
             {message: error.message},
