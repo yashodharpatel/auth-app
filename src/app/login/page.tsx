@@ -24,7 +24,7 @@ const Login = () => {
             router.push("/profile");
             
         } catch (error: any) {
-            toast.error(error?.response?.data?.message);
+            toast.error(error?.response?.data?.error);
             console.log(error?.response);
         } finally {
             setLoading(false);
