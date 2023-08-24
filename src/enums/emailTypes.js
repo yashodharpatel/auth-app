@@ -1,4 +1,4 @@
-export enum EmailTypes {
-    VERIFY = 'verify_email',
-    RESET = 'reset_password'
+export const EmailTypes = {
+    VERIFY: "verify_email",
+    RESET: 'reset_password'
 }
