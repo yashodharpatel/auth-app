@@ -1,42 +1,30 @@
-"use client";
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
-import {toast} from "react-hot-toast";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
-    const currentPath = request.nextUrl.pathname;
+  const currentPath = request.nextUrl.pathname;
 
-    const isPublicPath = currentPath === '/' || currentPath === '/login' || currentPath === '/signup';
+  const isPublicPath =
+    currentPath === "/" ||
+    currentPath === "/login" ||
+    currentPath === "/signup";
 
-    const token = request.cookies.get('token')?.value || '';
+  const token = request.cookies.get("token")?.value || "";
 
-    if(isPublicPath && token) {
-        const response = NextResponse.redirect(new URL('/profile', request.nextUrl));
-        toast('Already Logged In', {
-            icon: '⚠',
-        });
+  if (isPublicPath && token) {
+    const response = NextResponse.redirect(
+      new URL("/profile", request.nextUrl),
+    );
 
-        console.log('Already Logged In')
+    console.log("Already Logged In");
+    return response;
+  }
 
-
-        return response;
-    }
-
-    if(!isPublicPath && !token) {
-        toast('Please Login to access this page', {
-            icon: '⚠',
-        });
-
-
-        return NextResponse.redirect(new URL('/login', request.nextUrl));
-    }
+  if (!isPublicPath && !token) {
+    return NextResponse.redirect(new URL("/login", request.nextUrl));
+  }
 }
 
 export const config = {
-    matcher: [
-        '/',
-        '/profile/:path*',
-        '/login',
-        '/signup'
-    ]
-}
+  matcher: ["/", "/profile/:path*", "/login", "/signup"],
+};
