@@ -1,5 +1,4 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(request: NextRequest) {
   const currentPath = request.nextUrl.pathname;
@@ -12,12 +11,7 @@ export async function middleware(request: NextRequest) {
   const token = request.cookies.get("token")?.value || "";
 
   if (isPublicPath && token) {
-    const response = NextResponse.redirect(
-      new URL("/profile", request.nextUrl),
-    );
-
-    console.log("Already Logged In");
-    return response;
+    return NextResponse.redirect(new URL("/profile", request.nextUrl));
   }
 
   if (!isPublicPath && !token) {
